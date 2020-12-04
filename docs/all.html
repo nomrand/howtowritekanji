@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Required CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Optional CSS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.4/css/all.css">
+
+
+    <style>
+        body {
+            height: 100vh;
+        }
+        .container-fluid {
+            padding-right: 0px;
+        }
+
+        .char {
+            font-size: 25px;
+            width: 2.5em;
+            height: 2.5em;
+            margin: 5px;
+            padding: 0px;
+
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        #CharModal img {
+            width: 100%;
+            height: 70vh;
+            object-fit: contain;
+        }
+
+        #CharContents {
+            overflow-y: scroll;
+        }
+        #CharContents div {
+            margin: 5px;
+            margin-bottom: 10px;
+        }
+
+    </style>
+
+    <title>Character List</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div id="TopField">
+            <h4>Character List by grade in Japanese schools</h4>
+            <nav>
+                <div class="nav nav-fill nav-tabs" id="CharTabs" role="tablist">
+                    <a class="nav-item nav-link active" id="tab0" href="#panel0" data-toggle="tab" role="tab"
+                        aria-controls="panel0" aria-selected="true">kana</a>
+                    <a class="nav-item nav-link" id="tab1" href="#panel1" data-toggle="tab" role="tab"
+                        aria-controls="panel1" aria-selected="false">1st</a>
+                    <a class="nav-item nav-link" id="tab2" href="#panel2" data-toggle="tab" role="tab"
+                        aria-controls="panel2" aria-selected="false">2nd</a>
+                    <a class="nav-item nav-link" id="tab3" href="#panel3" data-toggle="tab" role="tab"
+                        aria-controls="panel3" aria-selected="false">3rd</a>
+                    <a class="nav-item nav-link" id="tab4" href="#panel4" data-toggle="tab" role="tab"
+                        aria-controls="panel4" aria-selected="false">4th</a>
+                    <a class="nav-item nav-link" id="tab5" href="#panel5" data-toggle="tab" role="tab"
+                        aria-controls="panel5" aria-selected="false">5th</a>
+                    <a class="nav-item nav-link" id="tab6" href="#panel6" data-toggle="tab" role="tab"
+                        aria-controls="panel6" aria-selected="false">6th</a>
+                </div>
+            </nav>
+        </div>
+        <div class="tab-content" id="CharContents">
+            <div class="tab-pane fade show active" id="panel0" role="tabpane0" aria-labelledby="tab0">
+                <div id="hiragana">
+                    <h5>HIRAGANA(ひらがな)</h5>
+                </div>
+                <div id="katakana">
+                    <h5>KATAKANA(カタカナ)</h5>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="panel1" role="tabpanel" aria-labelledby="tab1">
+                <div id="kanji1">
+                </div>
+            </div>
+            <div class="tab-pane fade" id="panel2" role="tabpanel" aria-labelledby="tab2">
+                <div id="kanji2">
+                </div>
+            </div>
+            <div class="tab-pane fade" id="panel3" role="tabpanel" aria-labelledby="tab3">
+                <div id="kanji3">
+                </div>
+            </div>
+            <div class="tab-pane fade" id="panel4" role="tabpanel" aria-labelledby="tab4">
+                <div id="kanji4">
+                </div>
+            </div>
+            <div class="tab-pane fade" id="panel5" role="tabpanel" aria-labelledby="tab5">
+                <div id="kanji5">
+                </div>
+            </div>
+            <div class="tab-pane fade" id="panel6" role="tabpanel" aria-labelledby="tab6">
+                <div id="kanji6">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="CharModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img id="CharImage">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Required JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+    <!-- Optional JavaScript -->
+    <script type="text/javascript" src="js/datalist.js"></script>
+    <script>
+        $(window).resize(onResize);
+
+        $(document).ready(function () {
+            onResize();
+
+            $.each(HIRAGANA_DATA, function (index, obj) {
+                $('#hiragana').append(createChar(obj.char));
+            });
+            $.each(KATAKANA_DATA, function (index, obj) {
+                $('#katakana').append(createChar(obj.char));
+            });
+            $.each(KANJI_DATA, function (index, obj) {
+                $('#kanji' + obj.year).append(createChar(obj.char));
+            });
+
+            $('.char').on('click', function () {
+                $('#CharImage').attr('src', 'img/char/' + $(this).attr('data-char') + '.gif');
+            });
+        });
+
+        function onResize(){
+            $('#CharContents').height($(window).height() - $('#TopField').height());
+        }
+
+        function createChar(char){
+            var element = $('<button></button>');
+            element.text(char);
+            element.attr('data-char', char);
+
+            // for modal open
+            element.attr('data-toggle', "modal");
+            element.attr('data-target', "#CharModal");
+
+            // bootstrap css
+            element.addClass('btn btn-outline-primary rounded');
+            // my css
+            element.addClass('char');
+
+            return element;
+        }
+    </script>
+</body>
+
+</html>
