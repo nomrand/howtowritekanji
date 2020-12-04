@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Required CSS -->
+
+    <!-- Optional CSS -->
+    <style>
+        html, body {
+            margin: 0px;
+            padding: 0px;
+        }
+        body > * {
+            margin: 5px;
+        }
+        iframe, #character_result > div {
+            margin: 0px;
+            padding: 0px;
+            border: none;
+            overflow: hidden;
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+        }
+        #character_input {
+            width: calc(100% - 20px);
+        }
+    </style>
+
+    <title>Character</title>
+</head>
+<body>
+    <input id='character_input' type='text'>
+    <div id='character_result'></div>
+
+    <!-- Required JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+    <!-- Optional JavaScript -->
+    <script type="text/javascript" src="js/datalist.js"></script>
+    <script>
+        var IMAGE_HEIGHT = 75;
+        var IMAGE_WIDTH = 100;
+        var ALL_CHAR_MAP = {};
+        $.each(SUUJI_DATA.concat(HIRAGANA_DATA, KATAKANA_DATA, KANJI_DATA), function(index, char){
+            ALL_CHAR_MAP[char.char] = char;
+        });
+
+        $(document).ready(function () {
+            $('#character_input').on('keyup', function(){
+                var text = $(this).val();
+                if(! text || text.length == 0) {
+                    return;
+                }
+
+                $('#character_result').empty();
+                $.each(text.split(''), function(index, char){
+                    var element;
+                    if(ALL_CHAR_MAP[char]){
+                        element = $('<iframe></iframe>');
+                        element.attr('src',
+                            './one.html?char=' + encodeURI(char) +
+                            '&height=' + IMAGE_HEIGHT +
+                            '&width=' + IMAGE_WIDTH);
+                        element.attr('height', IMAGE_HEIGHT);
+                        element.attr('width', IMAGE_WIDTH);
+                    } else {
+                        element = $('<div></div>');
+                        element.text(char);
+                        element.css({
+                            'font-size': parseInt(IMAGE_HEIGHT/2) + 'px',
+                        });
+                    }
+                    element.height(IMAGE_HEIGHT).width(IMAGE_WIDTH);
+                    $('#character_result').append(element);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

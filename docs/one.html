@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Required CSS -->
+
+    <!-- Optional CSS -->
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        img {
+            display: inline-block;
+            height: auto;
+        }
+    </style>
+
+    <title>One Character</title>
+</head>
+<body>
+    <div></div>
+
+    <!-- Required JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+    <!-- Optional JavaScript -->
+    <script>
+        var IMAGE_HEIGHT = 240;
+        var IMAGE_WIDTH = 320;
+        var HEIGHT_WIDTH_RATIO = (IMAGE_HEIGHT/IMAGE_WIDTH);
+
+        $(document).ready(function () {
+            var params = parseParam(window.location.search);
+            if(! params['char'] || ! params['width']){
+                return;
+            }
+
+            var char = params['char'];
+            // URL Decode
+            try {
+                char = decodeURI(char);
+            } catch (e) {
+                // catches a malformed URI
+                console.error(e);
+            }
+            // add image element
+            var element = $('<img>');
+            element.attr('src', 'img/char/' + params['char'] + '.gif');
+            $('body div').append(element);
+
+            // resize
+            var width = parseInt(params['width']);
+            element.width(width);
+
+            var height = width * HEIGHT_WIDTH_RATIO;
+            if(params['height']){
+                height = parseInt(params['height']);
+            }
+            element.height(height);
+            
+            $('html, body, body div').height(height).width(width);
+        });
+
+        function parseParam(url) {
+            var ret = {};
+            url = url.replace(/.*\?/g, '');
+            var pList = url.split('&');
+            for(var i=0; i<pList.length; i++) {
+                var p = pList[i].split('=');
+                var key = p[0];
+                var val;
+                if(p.length > 1){
+                    val = p[1];
+                }
+                ret[key] = val;
+            }
+            return ret;
+        }
+    </script>
+</body>
+</html>
